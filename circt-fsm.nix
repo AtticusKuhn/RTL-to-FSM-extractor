@@ -13,6 +13,7 @@
   z3,
   gitUpdater,
   circt-llvm,
+  # llvm,
   callPackage,
 }:
 
@@ -22,6 +23,7 @@ let
   # The circt-llvm derivation now lives inside this file,
   # ensuring it's built from the same custom source.
   circt-llvm = callPackage ./circt-llvm-fsm.nix { };
+  # circt-llvm = llvm;
 
 
 in
@@ -60,6 +62,7 @@ stdenv.mkDerivation rec {
     # LLVM_EXTERNAL_LIT is executed by python3, the wrapped bash script will not work
     "-DLLVM_EXTERNAL_LIT=${lit}/bin/.lit-wrapped"
     "-DCIRCT_LLHD_SIM_ENABLED=OFF"
+    "-DLLVM_USE_LINKER=lld"
   ];
 
   # The rest of the derivation remains largely the same as the upstream version.
