@@ -7,6 +7,13 @@
   python3,
   # We get `circt` passed in implicitly by `callPackage`
   circt,
+  clang,
+  ccache,
+  lld,
+  libgcc,
+  gcc,
+  gnumake,
+  extra-cmake-modules,
   llvm,
 }:
 stdenv.mkDerivation {
@@ -20,10 +27,32 @@ stdenv.mkDerivation {
     cmake
     ninja
     python3
+    clang
+    ccache
+    lld
+    libgcc
+    gcc
+    gnumake
+    cmake
+    extra-cmake-modules
+    stdenv.cc.cc.lib
+  ];
+
+  buildInputs = [
+    clang
+    ccache
+    lld
+    libgcc
+    gcc
+    gnumake
+    cmake
+    extra-cmake-modules
+    stdenv.cc.cc.lib
   ];
 
   preConfigure = ''
     cd llvm/llvm
+    export LD_LIBRARY_PATH="${stdenv.cc.cc.lib}/lib:$LD_LIBRARY_PATH"
   '';
 
   cmakeFlags = [
@@ -35,6 +64,10 @@ stdenv.mkDerivation {
     "-DLLVM_ENABLE_PROJECTS=mlir"
     "-DLLVM_TARGETS_TO_BUILD=Native"
     "-DLLVM_INSTALL_UTILS=ON"
+    "-DCMAKE_C_COMPILER=clang"
+    "-DCMAKE_CXX_COMPILER=clang++"
+    "-DLLVM_ENABLE_LLD=ON"
+    "-DLLVM_CCACHE_BUILD=OFF"
   ];
 
   outputs = [ "out" "lib" "dev" ];

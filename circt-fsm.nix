@@ -13,6 +13,7 @@
   z3,
   gitUpdater,
   circt-llvm,
+  fetchgit,
   # llvm,
   callPackage,
 }:
@@ -33,14 +34,24 @@ stdenv.mkDerivation rec {
 
   # --- MODIFICATION START ---
   # Here we point Nix to the specific fork and commit you need.
-  src = fetchFromGitHub {
-    owner = "TaoBi22";
-    repo = "circt";
+  # src = fetchFromGitHub {
+  #   owner = "TaoBi22";
+  #   repo = "circt";
+  #   rev = "fbd78552d967b9d7b422f21ef988c2bfd2c8cf19";
+  #   # The hash must be updated. Nix will tell you the correct hash
+  #   # if you run a build with a placeholder like this one.
+  #   hash = "sha256-r0U5IoAJ2SDfn303pyoUtCbZf6bgYDzoP+BY9jstkkI=";
+  #   fetchSubmodules = true;
+  # };
+  src = builtins.fetchGit {
+    # owner = "TaoBi22";
+    # repo = "circt";
+    url = "file:///home/atticusk/coding/rtl_to_fsm_extractor/circt";
     rev = "fbd78552d967b9d7b422f21ef988c2bfd2c8cf19";
     # The hash must be updated. Nix will tell you the correct hash
     # if you run a build with a placeholder like this one.
-    hash = "sha256-r0U5IoAJ2SDfn303pyoUtCbZf6bgYDzoP+BY9jstkkI=";
-    fetchSubmodules = true;
+    # hash = "sha256-r0U5IoAJ2SDfn303pyoUtCbZf6bgYDzoP+BY9jstkkI=";
+    submodules = true;
   };
   # --- MODIFICATION END ---
 
