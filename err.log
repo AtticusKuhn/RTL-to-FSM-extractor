@@ -1,0 +1,17 @@
+/tmp/circt-reduce-04b337.mlir:1:1: error: hw.module named 'miter' not found
+module {
+^
+===-------------------------------------------------------------------------===
+                         ... Execution time report ...
+===-------------------------------------------------------------------------===
+  Total Execution Time: 0.0016 seconds
+
+  ----Wall Time----  ----Name----
+    0.0005 ( 34.4%)  Parse MLIR input
+    0.0001 (  4.6%)  StripOMPass
+    0.0000 (  2.0%)  StripEmitPass
+    0.0002 ( 10.8%)  ExternalizeRegisters
+    0.0000 (  1.1%)    (A) circt::hw::InstanceGraph
+    0.0000 (  1.8%)  LowerToBMC
+    0.0007 ( 46.6%)  Rest
+    0.0016 (100.0%)  Total

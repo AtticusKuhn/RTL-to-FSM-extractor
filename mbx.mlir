@@ -12,7 +12,7 @@
 
 fsm.machine @mbx_fsm(
     // Parameter
-    %cfg_ombx: i1,
+    // %cfg_ombx: i1,
     // Control Inputs
     %mbx_range_valid_i: i1, %hostif_abort_ack_i: i1, %mbx_error_set_i: i1,
     %sysif_control_abort_set_i: i1, %sys_read_all_i: i1, %writer_close_mbx_i: i1,
@@ -25,6 +25,7 @@ fsm.machine @mbx_fsm(
 ) attributes {initialState = "MbxIdle"} {
     %true = hw.constant true
     %false = hw.constant false
+    %cfg_ombx = hw.constant 1 : i1
 
     // --- State: MbxIdle ---
     fsm.state @MbxIdle output {

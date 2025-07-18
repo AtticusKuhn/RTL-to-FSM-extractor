@@ -1,0 +1,65 @@
+OVERVIEW: circt-bmc - bounded model checker
+
+	This tool checks all possible executions of a hardware module up to a given time bound to check whether any asserted properties can be violated.
+
+USAGE: circt-bmc [options] <input file>
+
+OPTIONS:
+
+General options:
+
+  --mlir-disable-threading                             - Disable multi-threading within MLIR, overrides any further call to MLIRContext::enableMultiThreading()
+  --mlir-elide-elementsattrs-if-larger=<uint>          - Elide ElementsAttrs with "..." that have more elements than the given upper limit
+  --mlir-elide-resource-strings-if-larger=<uint>       - Elide printing value of resources if string is too long in chars.
+  --mlir-output-format=<value>                         - Output format for timing data
+    =text                                              -   display the results in text format
+    =json                                              -   display the results in JSON format
+  --mlir-pass-pipeline-crash-reproducer=<string>       - Generate a .mlir reproducer file at the given output path if the pass manager crashes or fails
+  --mlir-pass-pipeline-local-reproducer                - When generating a crash reproducer, attempt to generated a reproducer with the smallest pipeline.
+  --mlir-pass-statistics                               - Display the statistics of each pass
+  --mlir-pass-statistics-display=<value>               - Display method for pass statistics
+    =list                                              -   display the results in a merged list sorted by pass name
+    =pipeline                                          -   display the results with a nested pipeline view
+  --mlir-pretty-debuginfo                              - Print pretty debug info in MLIR output
+  --mlir-print-debuginfo                               - Print debug info in MLIR output
+  --mlir-print-elementsattrs-with-hex-if-larger=<long> - Print DenseElementsAttrs with a hex string that have more elements than the given upper limit (use -1 to disable)
+  --mlir-print-ir-after=<pass-arg>                     - Print IR after specified passes
+  --mlir-print-ir-after-all                            - Print IR after each pass
+  --mlir-print-ir-after-change                         - When printing the IR after a pass, only print if the IR changed
+  --mlir-print-ir-after-failure                        - When printing the IR after a pass, only print if the pass failed
+  --mlir-print-ir-before=<pass-arg>                    - Print IR before specified passes
+  --mlir-print-ir-before-all                           - Print IR before each pass
+  --mlir-print-ir-module-scope                         - When printing IR for print-ir-[before|after]{-all} always print the top-level operation
+  --mlir-print-ir-tree-dir=<string>                    - When printing the IR before/after a pass, print file tree rooted at this directory. Use in conjunction with mlir-print-ir-* flags
+  --mlir-print-local-scope                             - Print with local scope and inline information (eliding aliases for attributes, types, and locations
+  --mlir-print-op-on-diagnostic                        - When a diagnostic is emitted on an operation, also print the operation as an attached note
+  --mlir-print-skip-regions                            - Skip regions when printing ops.
+  --mlir-print-stacktrace-on-diagnostic                - When a diagnostic is emitted, also print the stack trace as an attached note
+  --mlir-print-unique-ssa-ids                          - Print unique SSA ID numbers for values, block arguments and naming conflicts across all regions
+  --mlir-print-value-users                             - Print users of operation results and block arguments as a comment
+  --mlir-timing                                        - Display execution times
+  --mlir-timing-display=<value>                        - Display method for timing data
+    =list                                              -   display the results in a list sorted by total time
+    =tree                                              -   display the results ina with a nested tree view
+  --mlir-use-nameloc-as-prefix                         - Print SSA IDs using NameLocs as prefixes
+
+Generic Options:
+
+  --help                                               - Display available options (--help-hidden for more)
+  --help-list                                          - Display list of available options (--help-list-hidden for more)
+  --version                                            - Display the version of this program
+
+circt-bmc Options:
+
+  -b <clock cycle count>                               - Specify a number of clock cycles to model check up to.
+  --module=<module name>                               - Specify a named module to verify properties over.
+  -o <filename>                                        - Output filename
+  --print-solver-output                                - Print the output (counterexample or proof) produced by the solver on each invocation and the assertion set that they prove/disprove.
+  Specify output format
+      --emit-mlir                                         - Emit LLVM MLIR dialect
+      --emit-llvm                                         - Emit LLVM
+      --emit-smtlib                                       - Emit SMT-LIB file
+      --run                                               - Perform BMC and output result
+  --shared-libs=<string>                               - Libraries to link dynamically
+  --verbose-pass-executions                            - Log executions of toplevel module passes
+  --verify-each                                        - Run the verifier after each transformation pass

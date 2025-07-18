@@ -42,17 +42,39 @@ module mbx_fsm (
 	output reg mbx_state_error_o;
 	wire [2:0] ctrl_state_q;
 	reg [2:0] ctrl_state_d;
-	wire [2:0] ctrl_state_logic;
+	reg [2:0] ctrl_state_logic;
 	assign ctrl_state_q = ctrl_state_logic;
-	prim_flop #(
-		.Width(3),
-		.ResetValue(3'b000)
-	) aff_ctrl_state_q(
-		.clk_i(clk_i),
-		.rst_ni(rst_ni),
-		.d_i(ctrl_state_d),
-		.q_o(ctrl_state_logic)
-	);
+// module prim_flop (
+//         clk_i,
+//         rst_ni,
+//         d_i,
+//         q_o
+// );
+//         parameter signed [31:0] Width = 1;
+//         parameter [Width - 1:0] ResetValue = 0;
+//         input clk_i;
+//         input rst_ni;
+//         input [Width - 1:0] d_i;
+//         output reg [Width - 1:0] q_o;
+//         always @(posedge clk_i or negedge rst_ni)
+//                 if (!rst_ni)
+//                         q_o <= ResetValue;
+//                 else
+//                         q_o <= d_i;
+// endmodule
+        // input clk_i;
+        // input rst_ni;
+        // input [2:0] d_i;
+        // output reg [2:0] q_o;
+	// prim_flop #(
+	// 	.Width(3),
+	// 	.ResetValue(3'b000)
+	// ) aff_ctrl_state_q(
+	// 	.clk_i(clk_i),
+	// 	.rst_ni(rst_ni),
+	// 	.d_i(ctrl_state_d),
+	// 	.q_o(ctrl_state_logic)
+	// );
 	wire mbx_idle;
 	assign mbx_idle = ctrl_state_q == 3'b000;
 	assign mbx_empty_o = mbx_idle & mbx_range_valid_i;
@@ -67,6 +89,14 @@ module mbx_fsm (
 	assign ombx_clear_ready = CfgOmbx & (((mbx_error_set_i | sysif_control_abort_set_i) | hostif_abort_ack_i) | (mbx_read_o & sys_read_all_i));
 	assign mbx_ready_update_o = CfgOmbx & (ombx_set_ready | ombx_clear_ready);
 	assign mbx_ready_o = !ombx_clear_ready;
+    always @(posedge clk_i or negedge rst_ni)
+		if (!rst_ni)
+		  ctrl_state_logic <= 3'b000;
+		else
+		  ctrl_state_logic <= ctrl_state_d;
+
+
+
 	always @(*) begin
 		if (_sv2v_0)
 			;
