@@ -25,14 +25,14 @@ module {
     %13 = comb.or %mbx_error_set_i, %sysif_control_abort_set_i, %hostif_abort_ack_i, %12 : i1
     %14 = comb.or %11, %13 : i1
     %15 = comb.xor %13, %true : i1
-    %16 = comb.icmp ceq %aff_ctrl_state_q.q_o, %c0_i3 : i3
+    %16 = comb.icmp eq %aff_ctrl_state_q.q_o, %c0_i3 : i3
     %17 = comb.and %mbx_range_valid_i, %writer_close_mbx_i : i1
-    %18 = comb.icmp ceq %aff_ctrl_state_q.q_o, %c1_i3 : i3
-    %19 = comb.icmp ceq %aff_ctrl_state_q.q_o, %c2_i3 : i3
-    %20 = comb.icmp ceq %aff_ctrl_state_q.q_o, %c3_i3 : i3
+    %18 = comb.icmp eq %aff_ctrl_state_q.q_o, %c1_i3 : i3
+    %19 = comb.icmp eq %aff_ctrl_state_q.q_o, %c2_i3 : i3
+    %20 = comb.icmp eq %aff_ctrl_state_q.q_o, %c3_i3 : i3
     %21 = comb.mux %19, %writer_last_word_written_i, %sys_read_all_i : i1
     %22 = comb.mux %19, %c3_i3, %c0_i3 : i3
-    %23 = comb.icmp ceq %aff_ctrl_state_q.q_o, %c-4_i3 : i3
+    %23 = comb.icmp eq %aff_ctrl_state_q.q_o, %c-4_i3 : i3
     %24 = comb.xor %mbx_error_set_i, %true : i1
     %25 = comb.and %16, %24 : i1
     %26 = comb.xor %16, %true : i1
@@ -47,7 +47,7 @@ module {
     %35 = comb.xor %17, %true : i1
     %36 = comb.or %30, %34, %35 : i1
     %37 = comb.mux %36, %aff_ctrl_state_q.q_o, %c3_i3 : i3
-    %38 = comb.icmp ceq %aff_ctrl_state_q.q_o, %c-3_i3 : i3
+    %38 = comb.icmp eq %aff_ctrl_state_q.q_o, %c-3_i3 : i3
     %39 = comb.mux %38, %aff_ctrl_state_q.q_o, %c0_i3 : i3
     %40 = comb.xor %38, %true : i1
     %41 = comb.xor %hostif_abort_ack_i, %true : i1
@@ -100,14 +100,9 @@ module {
   hw.module private @prim_flop(in %clk : !seq.clock, in %rst_ni : i1, in %d_i : i3, out q_o : i3) {
     %true = hw.constant true
     %c0_i3 = hw.constant 0 : i3
-    // %0 = seq.to_clock %clk_i
     %1 = comb.xor %rst_ni, %true : i1
-    %init = seq.initial() {
-      %c0_i3_14 = hw.constant 0 : i3
-      seq.yield %c0_i3_14 : i3
-    } : () -> !seq.immutable<i3>
-    %2 = seq.compreg sym @i_dont_know_what_does_this_do %d_i, %clk reset %1, %c0_i3 initial %init : i3
-    hw.output %2 : i3
+    %q_o = seq.firreg %d_i clock %clk reset async %1, %c0_i3 : i3
+    hw.output %q_o : i3
   }
   hw.module @mbx_fsm_manual(in %in0 : i1, in %in1 : i1, in %in2 : i1, in %in3 : i1, in %in4 : i1, in %in5 : i1, in %in6 : i1, in %in7 : i1, out out0 : i1, out out1 : i1, out out2 : i1, out out3 : i1, out out4 : i1, out out5 : i1, out out6 : i1, out out7 : i1, out out8 : i1, in %clk : !seq.clock, in %rst : i1) {
     %c0_i3 = hw.constant 0 : i3
@@ -388,19 +383,9 @@ module {
     %249 = comb.mux %240, %247, %246 : i3
     hw.output %231, %232, %233, %234, %235, %236, %237, %238, %239 : i1, i1, i1, i1, i1, i1, i1, i1, i1
   }
-
-
-  // Miter Top Module: A circuit to check for functional equivalence.
-  hw.module @miter ( in %clk: !seq.clock,  in %rst: i1, in %d0: i1, in %d1: i1, in %d2: i1, in %d3: i1, in %d4: i1, in %d5: i1, in %d6: i1, in %d7: i1, in %d8: i1, in %d9: i1, out result : i1) {
-  //hw.module @miter ( in %clk_i1: i1,  in %rst: i1,  in %d0: i1, in %d1: i1, in %d2: i1, in %d3: i1, in %d4: i1, in %d5: i1, in %d6: i1, in %d7: i1, in %d8: i1, in %d9: i1, out result : i1) {
-
-
-    // --- 1. Instantiate the Automatic FSM ---
-    // We need to adapt our miter's clock and reset to what this module expects.
-    //%clk_i1 = seq.from_clock %clk
+ hw.module @miter ( in %clk: !seq.clock,  in %rst: i1, in %d0: i1, in %d1: i1, in %d2: i1, in %d3: i1, in %d4: i1, in %d5: i1, in %d6: i1, in %d7: i1, in %d8: i1, in %d9: i1, out result : i1) {
 
     %rst_ni = comb.xor %rst, %true : i1
-    // %clk = seq.to_clock %clk_i1
     %true = hw.constant true
 
     %ao1, %ao2, %ao3, %ao4, %ao5, %ao6, %ao7, %ao8, %ao9 = hw.instance "auto_fsm" @mbx_fsm_auto(
@@ -409,26 +394,8 @@ module {
         mbx_error_set_i: %d2: i1, sysif_control_abort_set_i: %d3: i1,
         sys_read_all_i: %d4: i1, writer_close_mbx_i: %d5: i1,
         writer_last_word_written_i: %d6: i1, writer_write_valid_i: %d7: i1
-        // NOTE: These inputs are not connected to the manual FSM.
-        // This is based on the assumption from the interface mismatch.
-        // The original source MLIR had more inputs/outputs than the manual one.
-        // It's likely that these are derived from different sources.
-        // Let's assume the first 8 inputs correspond for this example.
-        // The original `mbx_automatic_lowered.mlir` has 9 outputs, but the module signature
-        // indicates 10 inputs besides clock and reset. We will map d8 and d9 to unused
-        // inputs to satisfy the signature if needed, but the provided MLIR has
-        // 10 data inputs. So let's map d0..d9. It seems there was a miscount
-        // in your original module signature, but this should be robust.
-        // We will only connect d0..d7 to the manual version.
-        // A deeper look shows the last two inputs were not present in the manual one.
-        // Let's check the automatic module signature again.
-        // It has 10 inputs plus clk/rst. Let's provide them.
-        // The number of outputs is 9 for both.
-      //) -> (o0: i1, o1: i1, o2: i1, o3: i1, o4: i1, o5: i1, o6: i1, o7: i1, o8: i1)
       ) -> (mbx_empty_o : i1, mbx_write_o : i1, mbx_read_o : i1, mbx_sys_abort_o : i1, mbx_ready_update_o : i1, mbx_ready_o : i1, mbx_irq_ready_o : i1, mbx_irq_abort_o : i1, mbx_state_error_o : i1)
-    // --- 2. Instantiate the Manual FSM ---
-    // This module uses the miter's clock and reset directly.
-    // We only connect the first 8 inputs as per its signature.
+
     %mo1, %mo2, %mo3, %mo4, %mo5, %mo6, %mo7, %mo8, %mo9= hw.instance "manual_fsm" @mbx_fsm_manual(
         in0: %d0: i1, in1: %d1: i1, in2: %d2: i1, in3: %d3: i1,
         in4: %d4: i1, in5: %d5: i1, in6: %d6: i1, in7: %d7: i1,
@@ -436,8 +403,6 @@ module {
       ) -> ( out0 : i1, out1 : i1, out2 : i1, out3 : i1, out4 : i1, out5 : i1, out6 : i1, out7 : i1, out8 : i1)
 
 
-    // --- 3. Compare All Outputs ---
-    // XOR each pair of corresponding outputs. The result is 1 if they differ.
     %diff1 = comb.xor %ao1, %mo1 : i1
     %diff2 = comb.xor %ao2, %mo2 : i1
     %diff3 = comb.xor %ao3, %mo3 : i1
@@ -448,12 +413,8 @@ module {
     %diff8 = comb.xor %ao8, %mo8 : i1
     %diff9 = comb.xor %ao9, %mo9 : i1
 
-    // OR all differences together. If this is 1, an error occurred.
     %any_diff = comb.or %diff9, %diff1, %diff2, %diff3, %diff4, %diff5, %diff6, %diff7, %diff8 : i1
 
-    // --- 4. Assert Equivalence ---
-    // We want to assert that 'any_diff' is always 0.
-    // Since verif.assert checks for 1, we assert (NOT any_diff).
     %outputs_are_equal = comb.xor %any_diff, %true : i1
     verif.assert %outputs_are_equal : i1
     hw.output %outputs_are_equal : i1

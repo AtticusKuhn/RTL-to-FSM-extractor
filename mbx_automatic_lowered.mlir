@@ -102,7 +102,7 @@ module {
     %c0_i3 = hw.constant 0 : i3
     %0 = seq.to_clock %clk_i
     %1 = comb.xor %rst_ni, %true : i1
-    %2 = seq.compreg %d_i, %0 reset %1, %c0_i3 : i3  
-    hw.output %2 : i3
+    %q_o = seq.firreg %d_i clock %0 reset async %1, %c0_i3 : i3
+    hw.output %q_o : i3
   }
 }
