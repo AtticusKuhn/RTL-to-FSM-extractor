@@ -417,16 +417,17 @@ module {
     %eq9 = comb.icmp eq %ao9, %mo9 : i1
 
 
-    //verif.assert %eq1 : i1
+    // verif.assert %eq1 : i1
     //verif.assert %eq2 : i1
-    verif.assert %eq3 : i1
+    //verif.assert %eq3 : i1
     //verif.assert %eq4 : i1
     //verif.assert %eq5 : i1
     //verif.assert %eq6 : i1
-    //verif.assert %eq7 : i1
-    //verif.assert %eq8 : i1
-    //verif.assert %eq9 : i1
+    verif.assert %eq7 : i1 // can be violated
+    //verif.assert %eq8 : i1 // can be violated
+    // verif.assert %eq9 : i1
     %outputs_are_equal = comb.and %eq1, %eq2, %eq3, %eq4, %eq5, %eq6, %eq7, %eq8, %eq9 : i1
+    // verif.assert %outputs_are_equal : i1
     hw.output
   }
 

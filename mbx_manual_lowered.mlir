@@ -16,7 +16,7 @@ module {
     %true_0 = hw.constant true
     %1 = comb.xor %in6, %true : i1
     %2 = comb.xor %in1, %true : i1
-    %3 = comb.xor %in1, %true : i1
+    %3 = comb.xor %in2, %true : i1
     %4 = comb.xor %in4, %true : i1
     %5 = comb.xor %in3, %true : i1
     %false_1 = hw.constant false

@@ -396,7 +396,7 @@ module {
     %7 = comb.icmp eq %auto_fsm.mbx_irq_ready_o, %manual_fsm.out6 : i1
     %8 = comb.icmp eq %auto_fsm.mbx_irq_abort_o, %manual_fsm.out7 : i1
     %9 = comb.icmp eq %auto_fsm.mbx_state_error_o, %manual_fsm.out8 : i1
-    verif.assert %3 : i1
+    verif.assert %7 : i1
     %10 = comb.and %1, %2, %3, %4, %5, %6, %7, %8, %9 : i1
     hw.output
   }

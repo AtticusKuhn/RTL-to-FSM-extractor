@@ -46,7 +46,7 @@ miter_circuit = """
 
     //verif.assert %eq1 : i1
     //verif.assert %eq2 : i1
-    verif.assert %eq3 : i1
+    // verif.assert %eq3 : i1
     //verif.assert %eq4 : i1
     //verif.assert %eq5 : i1
     //verif.assert %eq6 : i1
@@ -54,6 +54,7 @@ miter_circuit = """
     //verif.assert %eq8 : i1
     //verif.assert %eq9 : i1
     %outputs_are_equal = comb.and %eq1, %eq2, %eq3, %eq4, %eq5, %eq6, %eq7, %eq8, %eq9 : i1
+    verif.assert %outputs_are_equal : i1
     hw.output
   }
 """

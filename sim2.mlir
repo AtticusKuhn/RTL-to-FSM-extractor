@@ -112,13 +112,13 @@ func.func @entry() {
   arc.sim.instantiate @mbx_fsm as %model {
     arc.sim.set_input %model, "clk" = %high : !seq.clock, !arc.sim.instance<@mbx_fsm>
     arc.sim.set_input %model, "rst_ni" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
-    arc.sim.set_input %model, "mbx_range_valid_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "mbx_range_valid_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
     arc.sim.set_input %model, "hostif_abort_ack_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
-    arc.sim.set_input %model, "mbx_error_set_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
-    arc.sim.set_input %model, "sysif_control_abort_set_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
-    arc.sim.set_input %model, "sys_read_all_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "mbx_error_set_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "sysif_control_abort_set_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "sys_read_all_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
     arc.sim.set_input %model, "writer_close_mbx_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
-    arc.sim.set_input %model, "writer_last_word_written_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "writer_last_word_written_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
     arc.sim.set_input %model, "writer_write_valid_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
 
     %out01 = arc.sim.get_port %model, "mbx_empty_o" : i1, !arc.sim.instance<@mbx_fsm>
@@ -127,6 +127,19 @@ func.func @entry() {
     arc.sim.emit "mbx_write_o", %out11 : i1
     %out21 = arc.sim.get_port %model, "mbx_read_o" : i1, !arc.sim.instance<@mbx_fsm>
     arc.sim.emit "mbx_read_o", %out21 : i1
+    %out31 = arc.sim.get_port %model, "mbx_sys_abort_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_sys_abort_o", %out31 : i1
+    %out41 = arc.sim.get_port %model, "mbx_ready_update_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_ready_update_o", %out41 : i1
+    %out51 = arc.sim.get_port %model, "mbx_ready_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_ready_o", %out51 : i1
+    %out61 = arc.sim.get_port %model, "mbx_irq_ready_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_irq_ready_o", %out61 : i1
+    %out71 = arc.sim.get_port %model, "mbx_irq_abort_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_irq_abort_o", %out71 : i1
+    %out81 = arc.sim.get_port %model, "mbx_state_error_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_state_error_o", %out81 : i1
+
 
     arc.sim.step %model : !arc.sim.instance<@mbx_fsm>
 
@@ -136,16 +149,29 @@ func.func @entry() {
     arc.sim.emit "mbx_write_o", %out12 : i1
     %out22 = arc.sim.get_port %model, "mbx_read_o" : i1, !arc.sim.instance<@mbx_fsm>
     arc.sim.emit "mbx_read_o", %out22 : i1
+    %out32 = arc.sim.get_port %model, "mbx_sys_abort_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_sys_abort_o", %out32 : i1
+    %out42 = arc.sim.get_port %model, "mbx_ready_update_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_ready_update_o", %out42 : i1
+    %out52 = arc.sim.get_port %model, "mbx_ready_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_ready_o", %out52 : i1
+    %out62 = arc.sim.get_port %model, "mbx_irq_ready_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_irq_ready_o", %out62 : i1
+    %out72 = arc.sim.get_port %model, "mbx_irq_abort_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_irq_abort_o", %out72 : i1
+    %out82 = arc.sim.get_port %model, "mbx_state_error_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_state_error_o", %out82 : i1
+
 
     arc.sim.set_input %model, "clk" = %low : !seq.clock, !arc.sim.instance<@mbx_fsm>
     arc.sim.step %model : !arc.sim.instance<@mbx_fsm>
 
-    %out03 = arc.sim.get_port %model, "mbx_empty_o" : i1, !arc.sim.instance<@mbx_fsm>
-    arc.sim.emit "mbx_empty_o", %out03 : i1
-    %out13 = arc.sim.get_port %model, "mbx_write_o" : i1, !arc.sim.instance<@mbx_fsm>
-    arc.sim.emit "mbx_write_o", %out13 : i1
-    %out23 = arc.sim.get_port %model, "mbx_read_o" : i1, !arc.sim.instance<@mbx_fsm>
-    arc.sim.emit "mbx_read_o", %out23 : i1
+    // %out03 = arc.sim.get_port %model, "mbx_empty_o" : i1, !arc.sim.instance<@mbx_fsm>
+    // arc.sim.emit "mbx_empty_o", %out03 : i1
+    // %out13 = arc.sim.get_port %model, "mbx_write_o" : i1, !arc.sim.instance<@mbx_fsm>
+    // arc.sim.emit "mbx_write_o", %out13 : i1
+    // %out23 = arc.sim.get_port %model, "mbx_read_o" : i1, !arc.sim.instance<@mbx_fsm>
+    // arc.sim.emit "mbx_read_o", %out23 : i1
   }
   return
 }

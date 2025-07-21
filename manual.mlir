@@ -28,7 +28,7 @@ fsm.machine @mbx_fsm(
     // %next_mbx_sys_abort_host = fsm.variable "next_mbx_sys_abort_host" {initValue = false} : i1
     // %next_mbx_read = fsm.variable "next_mbx_read" {initValue = false} : i1
     %nhostif_abort_ack_i = comb.xor %hostif_abort_ack_i, %true : i1
-    %nmbx_error_set_i = comb.xor %hostif_abort_ack_i, %true : i1
+    %nmbx_error_set_i = comb.xor %mbx_error_set_i, %true : i1
     %nsys_read_all_i = comb.xor %sys_read_all_i, %true : i1
     %nmbx_sysif_control_abort_set_i = comb.xor %sysif_control_abort_set_i, %true : i1
     %false_1 = hw.constant false
