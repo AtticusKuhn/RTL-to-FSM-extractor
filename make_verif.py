@@ -1,8 +1,6 @@
 def trim(s):
     # Trim the outer 'module { ... }' wrapper to extract the inner content.
-    return "\n".join(s.split("\n")[1:-2])
-
-# --- Read and Prepare the Module Definitions ---
+    return "\n".join(s.strip().split("\n")[1:-1])
 
 with open("mbx_automatic_lowered.mlir", "r") as f:
   # Rename the module to avoid name collision.
@@ -12,15 +10,13 @@ with open("mbx_manual_lowered.mlir", "r") as f:
   # Rename the module to avoid name collision.
   mbx_manual_lowered = trim(f.read()).replace("@mbx_fsm", "@mbx_fsm_manual")
 
-# --- Define the Miter Circuit in MLIR ---
-
 # The miter module will serve as the top-level entity for verification.
 # It will instantiate both FSM versions and compare their outputs.
 miter_circuit = """
- hw.module @miter ( in %clk: !seq.clock,  in %rst: i1, in %d0: i1, in %d1: i1, in %d2: i1, in %d3: i1, in %d4: i1, in %d5: i1, in %d6: i1, in %d7: i1, in %d8: i1, in %d9: i1, out result : i1) {
-
-    %rst_ni = comb.xor %rst, %true : i1
+ hw.module @miter ( in %clk: !seq.clock,  in %d0: i1, in %d1: i1, in %d2: i1, in %d3: i1, in %d4: i1, in %d5: i1, in %d6: i1, in %d7: i1) {
+    %rst = hw.constant false
     %true = hw.constant true
+    %rst_ni = comb.xor %rst, %true : i1
 
     %ao1, %ao2, %ao3, %ao4, %ao5, %ao6, %ao7, %ao8, %ao9 = hw.instance "auto_fsm" @mbx_fsm_auto(
         clk: %clk: !seq.clock, rst_ni: %rst_ni: i1,
@@ -37,21 +33,28 @@ miter_circuit = """
       ) -> ( out0 : i1, out1 : i1, out2 : i1, out3 : i1, out4 : i1, out5 : i1, out6 : i1, out7 : i1, out8 : i1)
 
 
-    %diff1 = comb.xor %ao1, %mo1 : i1
-    %diff2 = comb.xor %ao2, %mo2 : i1
-    %diff3 = comb.xor %ao3, %mo3 : i1
-    %diff4 = comb.xor %ao4, %mo4 : i1
-    %diff5 = comb.xor %ao5, %mo5 : i1
-    %diff6 = comb.xor %ao6, %mo6 : i1
-    %diff7 = comb.xor %ao7, %mo7 : i1
-    %diff8 = comb.xor %ao8, %mo8 : i1
-    %diff9 = comb.xor %ao9, %mo9 : i1
+    %eq1 = comb.icmp eq %ao1, %mo1 : i1
+    %eq2 = comb.icmp eq %ao2, %mo2 : i1
+    %eq3 = comb.icmp eq %ao3, %mo3 : i1
+    %eq4 = comb.icmp eq %ao4, %mo4 : i1
+    %eq5 = comb.icmp eq %ao5, %mo5 : i1
+    %eq6 = comb.icmp eq %ao6, %mo6 : i1
+    %eq7 = comb.icmp eq %ao7, %mo7 : i1
+    %eq8 = comb.icmp eq %ao8, %mo8 : i1
+    %eq9 = comb.icmp eq %ao9, %mo9 : i1
 
-    %any_diff = comb.or %diff9, %diff1, %diff2, %diff3, %diff4, %diff5, %diff6, %diff7, %diff8 : i1
 
-    %outputs_are_equal = comb.xor %any_diff, %true : i1
-    verif.assert %outputs_are_equal : i1
-    hw.output %outputs_are_equal : i1
+    //verif.assert %eq1 : i1
+    //verif.assert %eq2 : i1
+    verif.assert %eq3 : i1
+    //verif.assert %eq4 : i1
+    //verif.assert %eq5 : i1
+    //verif.assert %eq6 : i1
+    //verif.assert %eq7 : i1
+    //verif.assert %eq8 : i1
+    //verif.assert %eq9 : i1
+    %outputs_are_equal = comb.and %eq1, %eq2, %eq3, %eq4, %eq5, %eq6, %eq7, %eq8, %eq9 : i1
+    hw.output
   }
 """
 

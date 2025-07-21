@@ -1,9 +1,3 @@
-// Copyright lowRISC contributors (OpenTitan project).
-// Licensed under the Apache License, Version 2.0, see LICENSE for details.
-// SPDX-License-Identifier: Apache-2.0
-
-// `include "prim_assert.sv"
-
 module mbx_fsm #(
   parameter bit CfgOmbx = 1'b1   // 1'b1: Obmbx, 1'b0: Ibmbx
 ) (
@@ -44,15 +38,6 @@ module mbx_fsm #(
   logic [$bits(mbx_ctrl_state_e)-1:0] ctrl_state_logic;
   assign ctrl_state_q = mbx_ctrl_state_e'(ctrl_state_logic);
 
-  // prim_flop #(
-  //   .Width($bits(mbx_ctrl_state_e)),
-  //   .ResetValue({MbxIdle})
-  // ) aff_ctrl_state_q (
-  //   .clk_i ( clk_i            ),
-  //   .rst_ni( rst_ni           ),
-  //   .d_i   ( ctrl_state_d     ),
-  //   .q_o   ( ctrl_state_logic )
-  // );
   always @(posedge clk_i or negedge rst_ni)
 		if (!rst_ni)
 		  ctrl_state_logic <= 3'b000;
@@ -77,20 +62,19 @@ module mbx_fsm #(
   logic ombx_set_ready, ombx_clear_ready;
   // Outbound mailbox is Ready, but only if not simultaneous with the exceptional conditions that
   // demand clearing of the Ready status bit.
-  assign ombx_set_ready = CfgOmbx
-                            & mbx_idle
+  assign ombx_set_ready = mbx_idle
                             & mbx_range_valid_i
                             & writer_close_mbx_i;
 
   // MbxRead is a common state for imbx and ombx
   // Exit of MbxRead is used to clear imbx.Busy and ombx.Ready.
   // This must also happen when an Error, Abort or FW-initiated reset occurs.
-  assign ombx_clear_ready = CfgOmbx & (mbx_error_set_i |
+  assign ombx_clear_ready = (mbx_error_set_i |
                                        sysif_control_abort_set_i |
                                        hostif_abort_ack_i |
                                        mbx_read_o & sys_read_all_i);
 
-  assign mbx_ready_update_o = CfgOmbx & (ombx_set_ready | ombx_clear_ready);  // MUTEX(set,clr)
+  assign mbx_ready_update_o = (ombx_set_ready | ombx_clear_ready);  // MUTEX(set,clr)
   assign mbx_ready_o        = !ombx_clear_ready;  // Clearing overrules setting.
 
   always_comb begin
@@ -103,14 +87,8 @@ module mbx_fsm #(
     end else begin
       unique case (ctrl_state_q)
         MbxIdle: begin
-          if (CfgOmbx) begin
-            if (mbx_range_valid_i & writer_close_mbx_i) begin
-              ctrl_state_d = MbxRead;
-            end
-          end else begin
-            if (mbx_range_valid_i & writer_write_valid_i) begin
-              ctrl_state_d = MbxWrite;
-            end
+          if (mbx_range_valid_i & writer_close_mbx_i) begin
+            ctrl_state_d = MbxRead;
           end
 
           // If system wants to error or abort, it has the highest priority

@@ -75,22 +75,51 @@ fsm.machine @mbx_fsm(
 
         // Operational transitions (OMBX)
         fsm.transition @MbxRead guard {
-            %no_ack = comb.icmp eq %hostif_abort_ack_i, %false : i1
-            %no_err_abort = comb.and %mbx_error_set_i, %sysif_control_abort_set_i : i1
-            %no_err_abort_neg = comb.icmp eq %no_err_abort, %false : i1
-            %cond = comb.and %cfg_ombx, %mbx_range_valid_i, %writer_close_mbx_i : i1
-            %guard = comb.and %no_ack, %no_err_abort_neg, %cond : i1
-            fsm.return %guard
+ // Check that all higher-priority signals are false
+    %no_ack = comb.icmp eq %hostif_abort_ack_i, %false : i1
+    %no_err = comb.icmp eq %mbx_error_set_i, %false : i1
+    %no_abort = comb.icmp eq %sysif_control_abort_set_i, %false : i1
+
+    // Combine the priority checks
+    %priority_ok = comb.and %no_ack, %no_err, %no_abort : i1
+
+    // Check the operational condition
+    %cond = comb.and %cfg_ombx, %mbx_range_valid_i, %writer_close_mbx_i : i1
+
+    // The final guard is true only if priority allows AND the condition is met
+    %guard = comb.and %priority_ok, %cond : i1
+    fsm.return %guard
+            // %no_ack = comb.icmp eq %hostif_abort_ack_i, %false : i1
+            // %no_err_abort = comb.and %mbx_error_set_i, %sysif_control_abort_set_i : i1
+            // %no_err_abort_neg = comb.icmp eq %no_err_abort, %false : i1
+            // %cond = comb.and %cfg_ombx, %mbx_range_valid_i, %writer_close_mbx_i : i1
+            // %guard = comb.and %no_ack, %no_err_abort_neg, %cond : i1
+            // fsm.return %guard
         }
         // Operational transitions (IMBX)
         fsm.transition @MbxWrite guard {
-            %no_ack = comb.icmp eq %hostif_abort_ack_i, %false : i1
-            %no_err_abort = comb.and %mbx_error_set_i, %sysif_control_abort_set_i : i1
-            %no_err_abort_neg = comb.icmp eq %no_err_abort, %false : i1
-            %ncfg_ombx = comb.icmp eq %cfg_ombx, %false : i1
-            %cond = comb.and %ncfg_ombx, %mbx_range_valid_i, %writer_write_valid_i : i1
-            %guard = comb.and %no_ack, %no_err_abort_neg, %cond : i1
-            fsm.return %guard
+ // Check that ALL higher-priority signals are false
+    %no_ack = comb.icmp eq %hostif_abort_ack_i, %false : i1
+    %no_err = comb.icmp eq %mbx_error_set_i, %false : i1
+    %no_abort = comb.icmp eq %sysif_control_abort_set_i, %false : i1
+
+    // Combine the priority checks
+    %priority_ok = comb.and %no_ack, %no_err, %no_abort : i1
+
+    // Check the operational condition for IMBX
+    %ncfg_ombx = comb.icmp eq %cfg_ombx, %false : i1
+    %op_cond = comb.and %ncfg_ombx, %mbx_range_valid_i, %writer_write_valid_i : i1
+
+    // The final guard is true only if priority allows AND the condition is met
+    %guard = comb.and %priority_ok, %op_cond : i1
+    fsm.return %guard
+            // %no_ack = comb.icmp eq %hostif_abort_ack_i, %false : i1
+            // %no_err_abort = comb.and %mbx_error_set_i, %sysif_control_abort_set_i : i1
+            // %no_err_abort_neg = comb.icmp eq %no_err_abort, %false : i1
+            // %ncfg_ombx = comb.icmp eq %cfg_ombx, %false : i1
+            // %cond = comb.and %ncfg_ombx, %mbx_range_valid_i, %writer_write_valid_i : i1
+            // %guard = comb.and %no_ack, %no_err_abort_neg, %cond : i1
+            // fsm.return %guard
         }
 
         // Default: Stay in MbxIdle

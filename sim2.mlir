@@ -1,4 +1,3 @@
-module {
   hw.module @mbx_fsm(in %clk : !seq.clock, in %rst_ni : i1, in %mbx_range_valid_i : i1, in %hostif_abort_ack_i : i1, in %mbx_error_set_i : i1, in %sysif_control_abort_set_i : i1, in %sys_read_all_i : i1, in %writer_close_mbx_i : i1, in %writer_last_word_written_i : i1, in %writer_write_valid_i : i1, out mbx_empty_o : i1, out mbx_write_o : i1, out mbx_read_o : i1, out mbx_sys_abort_o : i1, out mbx_ready_update_o : i1, out mbx_ready_o : i1, out mbx_irq_ready_o : i1, out mbx_irq_abort_o : i1, out mbx_state_error_o : i1) {
     %c1_i2 = hw.constant 1 : i2
     %true = hw.constant true
@@ -101,11 +100,52 @@ module {
     %true = hw.constant true
     %c0_i3 = hw.constant 0 : i3
     %1 = comb.xor %rst_ni, %true : i1
-    %init = seq.initial() {
-      %c0_i3_1 = hw.constant 0 : i3
-      seq.yield %c0_i3_1 : i3
-    } : () -> !seq.immutable<i3>
-    %q_o = seq.compreg %d_i, %clk reset %1, %c0_i3 initial %init : i3
+    %q_o = seq.compreg %d_i, %clk reset %1, %c0_i3 : i3
     hw.output %q_o : i3
   }
+
+func.func @entry() {
+  %high = seq.const_clock high
+  %low = seq.const_clock low
+  %c1 = hw.constant 1 : i1
+  %c0 = hw.constant 0 : i1
+  arc.sim.instantiate @mbx_fsm as %model {
+    arc.sim.set_input %model, "clk" = %high : !seq.clock, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "rst_ni" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "mbx_range_valid_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "hostif_abort_ack_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "mbx_error_set_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "sysif_control_abort_set_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "sys_read_all_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "writer_close_mbx_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "writer_last_word_written_i" = %c1 : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.set_input %model, "writer_write_valid_i" = %c0 : i1, !arc.sim.instance<@mbx_fsm>
+
+    %out01 = arc.sim.get_port %model, "mbx_empty_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_empty_o", %out01 : i1
+    %out11 = arc.sim.get_port %model, "mbx_write_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_write_o", %out11 : i1
+    %out21 = arc.sim.get_port %model, "mbx_read_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_read_o", %out21 : i1
+
+    arc.sim.step %model : !arc.sim.instance<@mbx_fsm>
+
+    %out02 = arc.sim.get_port %model, "mbx_empty_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_empty_o", %out02 : i1
+    %out12 = arc.sim.get_port %model, "mbx_write_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_write_o", %out12 : i1
+    %out22 = arc.sim.get_port %model, "mbx_read_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_read_o", %out22 : i1
+
+    arc.sim.set_input %model, "clk" = %low : !seq.clock, !arc.sim.instance<@mbx_fsm>
+    arc.sim.step %model : !arc.sim.instance<@mbx_fsm>
+
+    %out03 = arc.sim.get_port %model, "mbx_empty_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_empty_o", %out03 : i1
+    %out13 = arc.sim.get_port %model, "mbx_write_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_write_o", %out13 : i1
+    %out23 = arc.sim.get_port %model, "mbx_read_o" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_read_o", %out23 : i1
+  }
+  return
 }
