@@ -121,7 +121,7 @@ module {
     %true_0 = hw.constant true
     %1 = comb.xor %in6, %true : i1
     %2 = comb.xor %in1, %true : i1
-    %3 = comb.xor %in1, %true : i1
+    %3 = comb.xor %in2, %true : i1
     %4 = comb.xor %in4, %true : i1
     %5 = comb.xor %in3, %true : i1
     %false_1 = hw.constant false
@@ -279,7 +279,7 @@ module {
     %132 = comb.and %false_23, %in0 : i1
     %133 = comb.xor %false_26, %true : i1
     %134 = comb.and %133, %130 : i1
-    %135 = comb.and %true_25, %131 : i1
+    %135 = comb.and %false, %131 : i1
     %136 = comb.and %false_23, %in0, %in5 : i1
     %137 = comb.and %true_25, %in4 : i1
     %138 = comb.or %in2, %in3, %in1, %137 : i1
@@ -396,8 +396,8 @@ module {
     %7 = comb.icmp eq %auto_fsm.mbx_irq_ready_o, %manual_fsm.out6 : i1
     %8 = comb.icmp eq %auto_fsm.mbx_irq_abort_o, %manual_fsm.out7 : i1
     %9 = comb.icmp eq %auto_fsm.mbx_state_error_o, %manual_fsm.out8 : i1
-    verif.assert %7 : i1
     %10 = comb.and %1, %2, %3, %4, %5, %6, %7, %8, %9 : i1
+    verif.assert %10 : i1
     hw.output
   }
 }

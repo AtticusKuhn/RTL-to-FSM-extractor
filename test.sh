@@ -5,4 +5,4 @@ circt-verilog ../opentitan/hw/ip/mbx/rtl/mbx_fsm.sv -I ../opentitan/hw/ip/prim/r
 python3 make_verif.py
 circt-opt --hw-flatten-modules miter_2.mlir > flattened_miter.mlir
 circt-opt flattened_miter.mlir
-circt-bmc flattened_miter.mlir --module=miter -b 3 --shared-libs=/usr/lib/x86_64-linux-gnu/libz3.so --print-solver-output
+circt-bmc flattened_miter.mlir --module=miter -b 5 --shared-libs=/usr/lib/x86_64-linux-gnu/libz3.so

@@ -275,6 +275,7 @@
     %224 = comb.mux %219, %222, %221 : i3
     hw.output %210, %211, %212, %213, %214, %215, %216, %217, %218 : i1, i1, i1, i1, i1, i1, i1, i1, i1
   }
+
 func.func @entry() {
   %high = seq.const_clock high
   %low = seq.const_clock low
@@ -336,24 +337,24 @@ func.func @entry() {
     arc.sim.set_input %model, "clk" = %low : !seq.clock, !arc.sim.instance<@mbx_fsm>
     arc.sim.step %model : !arc.sim.instance<@mbx_fsm>
 
-    // %out03 = arc.sim.get_port %model, "out0" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_empty_o", %out03 : i1
-    // %out13 = arc.sim.get_port %model, "out1" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_write_o", %out13 : i1
-    // %out23 = arc.sim.get_port %model, "out2" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_read_o", %out23 : i1
-    // %out33 = arc.sim.get_port %model, "out3" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_sys_abort_o", %out33 : i1
-    // %out43 = arc.sim.get_port %model, "out4" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_ready_update_o", %out43 : i1
-    // %out53 = arc.sim.get_port %model, "out5" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_ready_o", %out53 : i1
-    // %out63 = arc.sim.get_port %model, "out6" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_irq_ready_o", %out63 : i1
-    // %out73 = arc.sim.get_port %model, "out7" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_irq_abort_o", %out73 : i1
-    // %out83 = arc.sim.get_port %model, "out8" : i1, !arc.sim.instance<@mbx_fsm>
-    // arc.sim.emit "mbx_state_error_o", %out83 : i1
+    %out03 = arc.sim.get_port %model, "out0" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_empty_o", %out03 : i1
+    %out13 = arc.sim.get_port %model, "out1" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_write_o", %out13 : i1
+    %out23 = arc.sim.get_port %model, "out2" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_read_o", %out23 : i1
+    %out33 = arc.sim.get_port %model, "out3" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_sys_abort_o", %out33 : i1
+    %out43 = arc.sim.get_port %model, "out4" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_ready_update_o", %out43 : i1
+    %out53 = arc.sim.get_port %model, "out5" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_ready_o", %out53 : i1
+    %out63 = arc.sim.get_port %model, "out6" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_irq_ready_o", %out63 : i1
+    %out73 = arc.sim.get_port %model, "out7" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_irq_abort_o", %out73 : i1
+    %out83 = arc.sim.get_port %model, "out8" : i1, !arc.sim.instance<@mbx_fsm>
+    arc.sim.emit "mbx_state_error_o", %out83 : i1
 
 
   }

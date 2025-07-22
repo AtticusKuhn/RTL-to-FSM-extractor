@@ -145,7 +145,7 @@ fsm.machine @mbx_fsm(
       %1 = comb.and %false_2, %mbx_range_valid_i : i1
       %2 = comb.xor %false_5, %true : i1
       %3 = comb.and %2, %next_mbx_sys_abort_host : i1
-      %mbx_irq_ready_o_val = comb.and %true_4, %next_mbx_read : i1
+      %mbx_irq_ready_o_val = comb.and %false, %next_mbx_read : i1
       %5 = comb.and %false_2, %mbx_range_valid_i, %writer_close_mbx_i : i1
       %6 = comb.and %true_4, %sys_read_all_i : i1
       %7 = comb.or %mbx_error_set_i, %sysif_control_abort_set_i, %hostif_abort_ack_i, %6 : i1

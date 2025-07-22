@@ -125,7 +125,7 @@ module {
     %true_0 = hw.constant true
     %1 = comb.xor %in6, %true : i1
     %2 = comb.xor %in1, %true : i1
-    %3 = comb.xor %in1, %true : i1
+    %3 = comb.xor %in2, %true : i1
     %4 = comb.xor %in4, %true : i1
     %5 = comb.xor %in3, %true : i1
     %false_1 = hw.constant false
@@ -283,7 +283,7 @@ module {
     %132 = comb.and %false_23, %in0 : i1
     %133 = comb.xor %false_26, %true : i1
     %134 = comb.and %133, %130 : i1
-    %135 = comb.and %true_25, %131 : i1
+    %135 = comb.and %false, %131 : i1
     %136 = comb.and %false_23, %in0, %in5 : i1
     %137 = comb.and %true_25, %in4 : i1
     %138 = comb.or %in2, %in3, %in1, %137 : i1
@@ -417,17 +417,17 @@ module {
     %eq9 = comb.icmp eq %ao9, %mo9 : i1
 
 
-    // verif.assert %eq1 : i1
-    //verif.assert %eq2 : i1
+    //verif.assert %eq1 : i1
+    // verif.assert %eq2 : i1
     //verif.assert %eq3 : i1
     //verif.assert %eq4 : i1
     //verif.assert %eq5 : i1
     //verif.assert %eq6 : i1
-    verif.assert %eq7 : i1 // can be violated
-    //verif.assert %eq8 : i1 // can be violated
-    // verif.assert %eq9 : i1
+    //verif.assert %eq7 : i1 // can be violated
+    // verif.assert %eq8 : i1
+    //verif.assert %eq9 : i1
     %outputs_are_equal = comb.and %eq1, %eq2, %eq3, %eq4, %eq5, %eq6, %eq7, %eq8, %eq9 : i1
-    // verif.assert %outputs_are_equal : i1
+    verif.assert %outputs_are_equal : i1
     hw.output
   }
 

@@ -174,7 +174,7 @@ module {
     %132 = comb.and %false_23, %in0 : i1
     %133 = comb.xor %false_26, %true : i1
     %134 = comb.and %133, %130 : i1
-    %135 = comb.and %true_25, %131 : i1
+    %135 = comb.and %false, %131 : i1
     %136 = comb.and %false_23, %in0, %in5 : i1
     %137 = comb.and %true_25, %in4 : i1
     %138 = comb.or %in2, %in3, %in1, %137 : i1
