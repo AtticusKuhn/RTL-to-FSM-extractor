@@ -1,0 +1,4 @@
+module {
+  %false = hw.constant false
+}
+

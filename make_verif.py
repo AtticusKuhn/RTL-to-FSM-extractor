@@ -13,8 +13,8 @@ with open("mbx_manual_lowered.mlir", "r") as f:
 # The miter module will serve as the top-level entity for verification.
 # It will instantiate both FSM versions and compare their outputs.
 miter_circuit = """
- hw.module @miter ( in %clk: !seq.clock,  in %d0: i1, in %d1: i1, in %d2: i1, in %d3: i1, in %d4: i1, in %d5: i1, in %d6: i1, in %d7: i1) {
-    %rst = hw.constant false
+ hw.module @miter ( in %clk: !seq.clock, in %rst : i1,  in %d0: i1, in %d1: i1, in %d2: i1, in %d3: i1, in %d4: i1, in %d5: i1, in %d6: i1, in %d7: i1) {
+    // %rst = hw.constant false
     %true = hw.constant true
     %rst_ni = comb.xor %rst, %true : i1
 

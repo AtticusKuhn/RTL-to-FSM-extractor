@@ -1,0 +1,312 @@
+"builtin.module"() ({
+  "fsm.machine"() <{function_type = (!seq.clock, i1, i1, i1, i1, i1, i1, i1, i1, i1) -> (i1, i1, i1, i1, i1, i1, i1, i1, i1), initialState = "state_0", sym_name = "mbx_fsm"}> ({
+  ^bb0(%arg0: !seq.clock, %arg1: i1, %arg2: i1, %arg3: i1, %arg4: i1, %arg5: i1, %arg6: i1, %arg7: i1, %arg8: i1, %arg9: i1):
+    "fsm.state"() <{sym_name = "state_7"}> ({
+    ^bb0(%arg80: !seq.clock, %arg81: i1, %arg82: i1, %arg83: i1, %arg84: i1, %arg85: i1, %arg86: i1, %arg87: i1, %arg88: i1, %arg89: i1):
+      %236 = "hw.constant"() <{value = true}> : () -> i1
+      %237 = "hw.constant"() <{value = false}> : () -> i1
+      %238 = "hw.constant"() <{value = false}> : () -> i1
+      %239 = "hw.constant"() <{value = false}> : () -> i1
+      %240 = "hw.constant"() <{value = false}> : () -> i1
+      %241 = "hw.constant"() <{value = false}> : () -> i1
+      %242 = "hw.constant"() <{value = false}> : () -> i1
+      %243 = "hw.constant"() <{value = false}> : () -> i1
+      %244 = "comb.or"(%arg84, %arg85, %arg83, %243) : (i1, i1, i1, i1) -> i1
+      %245 = "comb.xor"(%244, %236) : (i1, i1) -> i1
+      %246 = "hw.constant"() <{value = true}> : () -> i1
+      %247 = "comb.xor"(%arg83, %236) : (i1, i1) -> i1
+      %248 = "hw.constant"() <{value = true}> : () -> i1
+      %249 = "hw.constant"() <{value = true}> : () -> i1
+      %250 = "hw.constant"() <{value = true}> : () -> i1
+      %251 = "hw.constant"() <{value = true}> : () -> i1
+      %252 = "hw.constant"() <{value = true}> : () -> i1
+      %253 = "hw.constant"() <{value = true}> : () -> i1
+      %254 = "hw.constant"() <{value = true}> : () -> i1
+      %255 = "hw.constant"() <{value = true}> : () -> i1
+      %256 = "comb.and"(%247, %254, %253, %252, %251, %255, %250, %248, %249, %246) : (i1, i1, i1, i1, i1, i1, i1, i1, i1, i1) -> i1
+      "fsm.output"(%237, %238, %239, %240, %244, %245, %242, %241, %256) : (i1, i1, i1, i1, i1, i1, i1, i1, i1) -> ()
+    }, {
+    ^bb0:
+    }) : () -> ()
+    "fsm.state"() <{sym_name = "state_6"}> ({
+    ^bb0(%arg70: !seq.clock, %arg71: i1, %arg72: i1, %arg73: i1, %arg74: i1, %arg75: i1, %arg76: i1, %arg77: i1, %arg78: i1, %arg79: i1):
+      %215 = "hw.constant"() <{value = true}> : () -> i1
+      %216 = "hw.constant"() <{value = false}> : () -> i1
+      %217 = "hw.constant"() <{value = false}> : () -> i1
+      %218 = "hw.constant"() <{value = false}> : () -> i1
+      %219 = "hw.constant"() <{value = false}> : () -> i1
+      %220 = "hw.constant"() <{value = false}> : () -> i1
+      %221 = "hw.constant"() <{value = false}> : () -> i1
+      %222 = "hw.constant"() <{value = false}> : () -> i1
+      %223 = "comb.or"(%arg74, %arg75, %arg73, %222) : (i1, i1, i1, i1) -> i1
+      %224 = "comb.xor"(%223, %215) : (i1, i1) -> i1
+      %225 = "hw.constant"() <{value = true}> : () -> i1
+      %226 = "comb.xor"(%arg73, %215) : (i1, i1) -> i1
+      %227 = "hw.constant"() <{value = true}> : () -> i1
+      %228 = "hw.constant"() <{value = true}> : () -> i1
+      %229 = "hw.constant"() <{value = true}> : () -> i1
+      %230 = "hw.constant"() <{value = true}> : () -> i1
+      %231 = "hw.constant"() <{value = true}> : () -> i1
+      %232 = "hw.constant"() <{value = true}> : () -> i1
+      %233 = "hw.constant"() <{value = true}> : () -> i1
+      %234 = "hw.constant"() <{value = true}> : () -> i1
+      %235 = "comb.and"(%226, %233, %232, %231, %230, %234, %229, %227, %228, %225) : (i1, i1, i1, i1, i1, i1, i1, i1, i1, i1) -> i1
+      "fsm.output"(%216, %217, %218, %219, %223, %224, %221, %220, %235) : (i1, i1, i1, i1, i1, i1, i1, i1, i1) -> ()
+    }, {
+    ^bb0:
+    }) : () -> ()
+    "fsm.state"() <{sym_name = "state_5"}> ({
+    ^bb0(%arg60: !seq.clock, %arg61: i1, %arg62: i1, %arg63: i1, %arg64: i1, %arg65: i1, %arg66: i1, %arg67: i1, %arg68: i1, %arg69: i1):
+      %200 = "hw.constant"() <{value = true}> : () -> i1
+      %201 = "hw.constant"() <{value = 3 : i3}> : () -> i3
+      %202 = "hw.constant"() <{value = 0 : i3}> : () -> i3
+      %203 = "hw.constant"() <{value = false}> : () -> i1
+      %204 = "hw.constant"() <{value = false}> : () -> i1
+      %205 = "hw.constant"() <{value = false}> : () -> i1
+      %206 = "hw.constant"() <{value = true}> : () -> i1
+      %207 = "hw.constant"() <{value = false}> : () -> i1
+      %208 = "comb.icmp"(%213, %201) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %209 = "hw.constant"() <{value = false}> : () -> i1
+      %210 = "comb.or"(%arg64, %arg65, %arg63, %209) : (i1, i1, i1, i1) -> i1
+      %211 = "comb.xor"(%210, %200) : (i1, i1) -> i1
+      %212 = "hw.constant"() <{value = -3 : i3}> : () -> i3
+      %213 = "comb.mux"(%arg63, %202, %212) : (i1, i3, i3) -> i3
+      %214 = "hw.constant"() <{value = false}> : () -> i1
+      "fsm.output"(%203, %204, %205, %206, %210, %211, %208, %207, %214) : (i1, i1, i1, i1, i1, i1, i1, i1, i1) -> ()
+    }, {
+    ^bb0:
+    }) : () -> ()
+    "fsm.state"() <{sym_name = "state_4"}> ({
+    ^bb0(%arg50: !seq.clock, %arg51: i1, %arg52: i1, %arg53: i1, %arg54: i1, %arg55: i1, %arg56: i1, %arg57: i1, %arg58: i1, %arg59: i1):
+      %166 = "hw.constant"() <{value = true}> : () -> i1
+      %167 = "hw.constant"() <{value = -3 : i3}> : () -> i3
+      %168 = "hw.constant"() <{value = 3 : i3}> : () -> i3
+      %169 = "hw.constant"() <{value = 0 : i3}> : () -> i3
+      %170 = "hw.constant"() <{value = -4 : i3}> : () -> i3
+      %171 = "hw.constant"() <{value = false}> : () -> i1
+      %172 = "hw.constant"() <{value = false}> : () -> i1
+      %173 = "hw.constant"() <{value = false}> : () -> i1
+      %174 = "hw.constant"() <{value = false}> : () -> i1
+      %175 = "comb.icmp"(%197, %167) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %176 = "comb.icmp"(%197, %168) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %177 = "hw.constant"() <{value = false}> : () -> i1
+      %178 = "comb.or"(%arg54, %arg55, %arg53, %177) : (i1, i1, i1, i1) -> i1
+      %179 = "comb.xor"(%178, %166) : (i1, i1) -> i1
+      %180 = "hw.constant"() <{value = true}> : () -> i1
+      %181 = "hw.constant"() <{value = true}> : () -> i1
+      %182 = "hw.constant"() <{value = true}> : () -> i1
+      %183 = "comb.xor"(%arg53, %166) : (i1, i1) -> i1
+      %184 = "hw.constant"() <{value = true}> : () -> i1
+      %185 = "hw.constant"() <{value = true}> : () -> i1
+      %186 = "hw.constant"() <{value = true}> : () -> i1
+      %187 = "hw.constant"() <{value = true}> : () -> i1
+      %188 = "hw.constant"() <{value = true}> : () -> i1
+      %189 = "comb.mux"(%arg55, %167, %170) : (i1, i3, i3) -> i3
+      %190 = "hw.constant"() <{value = false}> : () -> i1
+      %191 = "hw.constant"() <{value = false}> : () -> i1
+      %192 = "comb.and"(%183, %181, %180) : (i1, i1, i1) -> i1
+      %193 = "comb.or"(%192, %191, %190) : (i1, i1, i1) -> i1
+      %194 = "comb.mux"(%193, %189, %169) : (i1, i3, i3) -> i3
+      %195 = "comb.xor"(%193, %166) : (i1, i1) -> i1
+      %196 = "hw.constant"() <{value = true}> : () -> i1
+      %197 = "comb.mux"(%arg53, %169, %194) : (i1, i3, i3) -> i3
+      %198 = "hw.constant"() <{value = true}> : () -> i1
+      %199 = "comb.and"(%183, %195, %196, %188, %187, %198, %186, %184, %185, %182) : (i1, i1, i1, i1, i1, i1, i1, i1, i1, i1) -> i1
+      "fsm.output"(%171, %172, %173, %174, %178, %179, %176, %175, %199) : (i1, i1, i1, i1, i1, i1, i1, i1, i1) -> ()
+    }, {
+    ^bb0:
+    }) : () -> ()
+    "fsm.state"() <{sym_name = "state_3"}> ({
+    ^bb0(%arg40: !seq.clock, %arg41: i1, %arg42: i1, %arg43: i1, %arg44: i1, %arg45: i1, %arg46: i1, %arg47: i1, %arg48: i1, %arg49: i1):
+      %128 = "hw.constant"() <{value = true}> : () -> i1
+      %129 = "hw.constant"() <{value = -4 : i3}> : () -> i3
+      %130 = "hw.constant"() <{value = -3 : i3}> : () -> i3
+      %131 = "hw.constant"() <{value = 0 : i3}> : () -> i3
+      %132 = "hw.constant"() <{value = false}> : () -> i1
+      %133 = "hw.constant"() <{value = false}> : () -> i1
+      %134 = "hw.constant"() <{value = true}> : () -> i1
+      %135 = "hw.constant"() <{value = false}> : () -> i1
+      %136 = "comb.icmp"(%163, %130) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %137 = "hw.constant"() <{value = false}> : () -> i1
+      %138 = "comb.or"(%arg44, %arg45, %arg43, %arg46) : (i1, i1, i1, i1) -> i1
+      %139 = "comb.xor"(%138, %128) : (i1, i1) -> i1
+      %140 = "comb.xor"(%arg44, %128) : (i1, i1) -> i1
+      %141 = "hw.constant"() <{value = 3 : i3}> : () -> i3
+      %142 = "hw.constant"() <{value = true}> : () -> i1
+      %143 = "comb.xor"(%arg43, %128) : (i1, i1) -> i1
+      %144 = "comb.and"(%140, %143) : (i1, i1) -> i1
+      %145 = "comb.and"(%144, %arg45) : (i1, i1) -> i1
+      %146 = "comb.mux"(%145, %130, %131) : (i1, i3, i3) -> i3
+      %147 = "comb.xor"(%145, %128) : (i1, i1) -> i1
+      %148 = "comb.and"(%143, %arg44) : (i1, i1) -> i1
+      %149 = "comb.mux"(%148, %129, %146) : (i1, i3, i3) -> i3
+      %150 = "comb.xor"(%148, %128) : (i1, i1) -> i1
+      %151 = "comb.xor"(%arg45, %128) : (i1, i1) -> i1
+      %152 = "hw.constant"() <{value = true}> : () -> i1
+      %153 = "hw.constant"() <{value = true}> : () -> i1
+      %154 = "hw.constant"() <{value = true}> : () -> i1
+      %155 = "comb.mux"(%arg46, %131, %141) : (i1, i3, i3) -> i3
+      %156 = "comb.and"(%151, %144) : (i1, i1) -> i1
+      %157 = "hw.constant"() <{value = false}> : () -> i1
+      %158 = "hw.constant"() <{value = false}> : () -> i1
+      %159 = "comb.or"(%156, %157, %158) : (i1, i1, i1) -> i1
+      %160 = "comb.mux"(%159, %155, %149) : (i1, i3, i3) -> i3
+      %161 = "comb.xor"(%159, %128) : (i1, i1) -> i1
+      %162 = "hw.constant"() <{value = true}> : () -> i1
+      %163 = "comb.mux"(%arg43, %131, %160) : (i1, i3, i3) -> i3
+      %164 = "hw.constant"() <{value = true}> : () -> i1
+      %165 = "comb.and"(%143, %161, %150, %147, %162, %154, %153, %164, %152, %142) : (i1, i1, i1, i1, i1, i1, i1, i1, i1, i1) -> i1
+      "fsm.output"(%132, %133, %134, %135, %138, %139, %137, %136, %165) : (i1, i1, i1, i1, i1, i1, i1, i1, i1) -> ()
+    }, {
+    ^bb0:
+    }) : () -> ()
+    "fsm.state"() <{sym_name = "state_2"}> ({
+    ^bb0(%arg30: !seq.clock, %arg31: i1, %arg32: i1, %arg33: i1, %arg34: i1, %arg35: i1, %arg36: i1, %arg37: i1, %arg38: i1, %arg39: i1):
+      %88 = "hw.constant"() <{value = true}> : () -> i1
+      %89 = "hw.constant"() <{value = -4 : i3}> : () -> i3
+      %90 = "hw.constant"() <{value = -3 : i3}> : () -> i3
+      %91 = "hw.constant"() <{value = 3 : i3}> : () -> i3
+      %92 = "hw.constant"() <{value = 0 : i3}> : () -> i3
+      %93 = "hw.constant"() <{value = 2 : i3}> : () -> i3
+      %94 = "hw.constant"() <{value = false}> : () -> i1
+      %95 = "hw.constant"() <{value = false}> : () -> i1
+      %96 = "hw.constant"() <{value = false}> : () -> i1
+      %97 = "hw.constant"() <{value = false}> : () -> i1
+      %98 = "comb.icmp"(%125, %90) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %99 = "comb.icmp"(%125, %91) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %100 = "hw.constant"() <{value = false}> : () -> i1
+      %101 = "comb.or"(%arg34, %arg35, %arg33, %100) : (i1, i1, i1, i1) -> i1
+      %102 = "comb.xor"(%101, %88) : (i1, i1) -> i1
+      %103 = "comb.xor"(%arg34, %88) : (i1, i1) -> i1
+      %104 = "hw.constant"() <{value = true}> : () -> i1
+      %105 = "comb.xor"(%arg33, %88) : (i1, i1) -> i1
+      %106 = "comb.and"(%103, %105) : (i1, i1) -> i1
+      %107 = "comb.and"(%106, %arg35) : (i1, i1) -> i1
+      %108 = "comb.mux"(%107, %90, %92) : (i1, i3, i3) -> i3
+      %109 = "comb.xor"(%107, %88) : (i1, i1) -> i1
+      %110 = "comb.and"(%105, %arg34) : (i1, i1) -> i1
+      %111 = "comb.mux"(%110, %89, %108) : (i1, i3, i3) -> i3
+      %112 = "comb.xor"(%110, %88) : (i1, i1) -> i1
+      %113 = "comb.xor"(%arg35, %88) : (i1, i1) -> i1
+      %114 = "hw.constant"() <{value = true}> : () -> i1
+      %115 = "hw.constant"() <{value = true}> : () -> i1
+      %116 = "hw.constant"() <{value = true}> : () -> i1
+      %117 = "comb.mux"(%arg38, %91, %93) : (i1, i3, i3) -> i3
+      %118 = "comb.and"(%113, %106) : (i1, i1) -> i1
+      %119 = "hw.constant"() <{value = false}> : () -> i1
+      %120 = "hw.constant"() <{value = false}> : () -> i1
+      %121 = "comb.or"(%118, %119, %120) : (i1, i1, i1) -> i1
+      %122 = "comb.mux"(%121, %117, %111) : (i1, i3, i3) -> i3
+      %123 = "comb.xor"(%121, %88) : (i1, i1) -> i1
+      %124 = "hw.constant"() <{value = true}> : () -> i1
+      %125 = "comb.mux"(%arg33, %92, %122) : (i1, i3, i3) -> i3
+      %126 = "hw.constant"() <{value = true}> : () -> i1
+      %127 = "comb.and"(%105, %123, %112, %109, %124, %116, %115, %126, %114, %104) : (i1, i1, i1, i1, i1, i1, i1, i1, i1, i1) -> i1
+      "fsm.output"(%94, %95, %96, %97, %101, %102, %99, %98, %127) : (i1, i1, i1, i1, i1, i1, i1, i1, i1) -> ()
+    }, {
+    ^bb0:
+    }) : () -> ()
+    "fsm.state"() <{sym_name = "state_1"}> ({
+    ^bb0(%arg20: !seq.clock, %arg21: i1, %arg22: i1, %arg23: i1, %arg24: i1, %arg25: i1, %arg26: i1, %arg27: i1, %arg28: i1, %arg29: i1):
+      %46 = "hw.constant"() <{value = 1 : i2}> : () -> i2
+      %47 = "hw.constant"() <{value = true}> : () -> i1
+      %48 = "hw.constant"() <{value = -4 : i3}> : () -> i3
+      %49 = "hw.constant"() <{value = -3 : i3}> : () -> i3
+      %50 = "hw.constant"() <{value = 3 : i3}> : () -> i3
+      %51 = "hw.constant"() <{value = 0 : i3}> : () -> i3
+      %52 = "hw.constant"() <{value = 1 : i3}> : () -> i3
+      %53 = "hw.constant"() <{value = false}> : () -> i1
+      %54 = "hw.constant"() <{value = true}> : () -> i1
+      %55 = "hw.constant"() <{value = false}> : () -> i1
+      %56 = "hw.constant"() <{value = false}> : () -> i1
+      %57 = "comb.icmp"(%85, %49) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %58 = "comb.icmp"(%85, %50) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %59 = "hw.constant"() <{value = false}> : () -> i1
+      %60 = "comb.or"(%arg24, %arg25, %arg23, %59) : (i1, i1, i1, i1) -> i1
+      %61 = "comb.xor"(%60, %47) : (i1, i1) -> i1
+      %62 = "comb.xor"(%arg24, %47) : (i1, i1) -> i1
+      %63 = "hw.constant"() <{value = true}> : () -> i1
+      %64 = "comb.xor"(%arg23, %47) : (i1, i1) -> i1
+      %65 = "hw.constant"() <{value = true}> : () -> i1
+      %66 = "hw.constant"() <{value = true}> : () -> i1
+      %67 = "comb.concat"(%46, %arg28) : (i2, i1) -> i3
+      %68 = "comb.and"(%62, %64) : (i1, i1) -> i1
+      %69 = "comb.xor"(%arg25, %47) : (i1, i1) -> i1
+      %70 = "comb.and"(%69, %68) : (i1, i1) -> i1
+      %71 = "comb.and"(%arg27, %70) : (i1, i1) -> i1
+      %72 = "comb.mux"(%71, %67, %51) : (i1, i3, i3) -> i3
+      %73 = "comb.xor"(%71, %47) : (i1, i1) -> i1
+      %74 = "comb.and"(%68, %arg25) : (i1, i1) -> i1
+      %75 = "comb.mux"(%74, %49, %72) : (i1, i3, i3) -> i3
+      %76 = "comb.xor"(%74, %47) : (i1, i1) -> i1
+      %77 = "comb.and"(%64, %arg24) : (i1, i1) -> i1
+      %78 = "comb.mux"(%77, %48, %75) : (i1, i3, i3) -> i3
+      %79 = "comb.xor"(%77, %47) : (i1, i1) -> i1
+      %80 = "hw.constant"() <{value = true}> : () -> i1
+      %81 = "hw.constant"() <{value = true}> : () -> i1
+      %82 = "comb.mux"(%arg23, %51, %78) : (i1, i3, i3) -> i3
+      %83 = "comb.xor"(%arg27, %47) : (i1, i1) -> i1
+      %84 = "comb.and"(%70, %83) : (i1, i1) -> i1
+      %85 = "comb.mux"(%84, %52, %82) : (i1, i3, i3) -> i3
+      %86 = "comb.xor"(%84, %47) : (i1, i1) -> i1
+      %87 = "comb.and"(%86, %64, %79, %76, %73, %81, %80, %65, %66, %63) : (i1, i1, i1, i1, i1, i1, i1, i1, i1, i1) -> i1
+      "fsm.output"(%53, %54, %55, %56, %60, %61, %58, %57, %87) : (i1, i1, i1, i1, i1, i1, i1, i1, i1) -> ()
+    }, {
+    ^bb0:
+    }) : () -> ()
+    "fsm.state"() <{sym_name = "state_0"}> ({
+    ^bb0(%arg10: !seq.clock, %arg11: i1, %arg12: i1, %arg13: i1, %arg14: i1, %arg15: i1, %arg16: i1, %arg17: i1, %arg18: i1, %arg19: i1):
+      %0 = "hw.constant"() <{value = true}> : () -> i1
+      %1 = "hw.constant"() <{value = -4 : i3}> : () -> i3
+      %2 = "hw.constant"() <{value = -3 : i3}> : () -> i3
+      %3 = "hw.constant"() <{value = 3 : i3}> : () -> i3
+      %4 = "hw.constant"() <{value = 0 : i3}> : () -> i3
+      %5 = "hw.constant"() <{value = 0 : i3}> : () -> i3
+      %6 = "hw.constant"() <{value = true}> : () -> i1
+      %7 = "hw.constant"() <{value = false}> : () -> i1
+      %8 = "hw.constant"() <{value = false}> : () -> i1
+      %9 = "hw.constant"() <{value = false}> : () -> i1
+      %10 = "comb.icmp"(%43, %2) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %11 = "comb.icmp"(%43, %3) <{predicate = 0 : i64}> : (i3, i3) -> i1
+      %12 = "comb.and"(%arg12, %arg17, %6) {sv.namehint = "ombx_set_ready"} : (i1, i1, i1) -> i1
+      %13 = "hw.constant"() <{value = false}> : () -> i1
+      %14 = "comb.or"(%arg14, %arg15, %arg13, %13) : (i1, i1, i1, i1) -> i1
+      %15 = "comb.or"(%12, %14) : (i1, i1) -> i1
+      %16 = "comb.xor"(%14, %0) : (i1, i1) -> i1
+      %17 = "comb.and"(%arg12, %arg17) : (i1, i1) -> i1
+      %18 = "comb.xor"(%arg14, %0) : (i1, i1) -> i1
+      %19 = "hw.constant"() <{value = false}> : () -> i1
+      %20 = "comb.mux"(%18, %arg15, %arg16) : (i1, i1, i1) -> i1
+      %21 = "comb.mux"(%18, %2, %4) : (i1, i3, i3) -> i3
+      %22 = "comb.xor"(%17, %0) : (i1, i1) -> i1
+      %23 = "comb.or"(%arg14, %22, %19) : (i1, i1, i1) -> i1
+      %24 = "comb.mux"(%23, %5, %3) : (i1, i3, i3) -> i3
+      %25 = "hw.constant"() <{value = 0 : i3}> : () -> i3
+      %26 = "hw.constant"() <{value = true}> : () -> i1
+      %27 = "comb.xor"(%arg13, %0) : (i1, i1) -> i1
+      %28 = "hw.constant"() <{value = true}> : () -> i1
+      %29 = "hw.constant"() <{value = true}> : () -> i1
+      %30 = "hw.constant"() <{value = true}> : () -> i1
+      %31 = "hw.constant"() <{value = true}> : () -> i1
+      %32 = "hw.constant"() <{value = true}> : () -> i1
+      %33 = "comb.mux"(%20, %21, %24) : (i1, i3, i3) -> i3
+      %34 = "hw.constant"() <{value = false}> : () -> i1
+      %35 = "comb.and"(%18, %27) : (i1, i1) -> i1
+      %36 = "hw.constant"() <{value = false}> : () -> i1
+      %37 = "comb.or"(%35, %34, %36) : (i1, i1, i1) -> i1
+      %38 = "comb.mux"(%37, %33, %25) : (i1, i3, i3) -> i3
+      %39 = "comb.xor"(%37, %0) : (i1, i1) -> i1
+      %40 = "comb.and"(%27, %arg14) : (i1, i1) -> i1
+      %41 = "comb.mux"(%40, %1, %38) : (i1, i3, i3) -> i3
+      %42 = "comb.xor"(%40, %0) : (i1, i1) -> i1
+      %43 = "comb.mux"(%arg13, %4, %41) : (i1, i3, i3) -> i3
+      %44 = "hw.constant"() <{value = true}> : () -> i1
+      %45 = "comb.and"(%27, %42, %39, %32, %31, %44, %30, %28, %29, %26) : (i1, i1, i1, i1, i1, i1, i1, i1, i1, i1) -> i1
+      "fsm.output"(%arg12, %7, %8, %9, %15, %16, %11, %10, %45) : (i1, i1, i1, i1, i1, i1, i1, i1, i1) -> ()
+    }, {
+    ^bb0:
+    }) : () -> ()
+  }) : () -> ()
+}) : () -> ()
+
+

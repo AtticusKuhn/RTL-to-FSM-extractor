@@ -1,0 +1,77 @@
+diff --git a/include/circt/Conversion/Passes.td b/include/circt/Conversion/Passes.td
+index 0794ff363..1b773dee6 100644
+--- a/include/circt/Conversion/Passes.td
++++ b/include/circt/Conversion/Passes.td
+@@ -403,6 +403,12 @@ def ConvertFSMToCore : Pass<"convert-fsm-to-core", "mlir::ModuleOp"> {
+                            "circt::seq::SeqDialect"];
+ }
+ 
++def ConvertCoreToFSM : Pass<"convert-core-to-fsm", "mlir::ModuleOp"> {
++  let summary = "Convert Core to FSM";
++  let constructor = "circt::createConvertCoreToFSMPass()";
++  let dependentDialects = ["circt::fsm::FSMDialect"];
++}
++
+ //===----------------------------------------------------------------------===//
+ // FSMToSV
+ //===----------------------------------------------------------------------===//
+diff --git a/lib/CAPI/Conversion/CMakeLists.txt b/lib/CAPI/Conversion/CMakeLists.txt
+index e8c40836a..6b7faeff4 100644
+--- a/lib/CAPI/Conversion/CMakeLists.txt
++++ b/lib/CAPI/Conversion/CMakeLists.txt
+@@ -21,6 +21,7 @@ add_circt_public_c_api_library(CIRCTCAPIConversion
+   CIRCTFIRRTLToHW
+   CIRCTFSMToSV
+   CIRCTFSMToCore
++  CIRCTCoreToFSM
+   CIRCTHandshakeToDC
+   CIRCTHandshakeToHW
+   CIRCTHWArithToHW
+diff --git a/lib/CAPI/Dialect/CMakeLists.txt b/lib/CAPI/Dialect/CMakeLists.txt
+index eb642a14d..630d0fd80 100644
+--- a/lib/CAPI/Dialect/CMakeLists.txt
++++ b/lib/CAPI/Dialect/CMakeLists.txt
+@@ -53,6 +53,7 @@ add_circt_public_c_api_library(CIRCTCAPIComb
+   MLIRCAPIIR
+   CIRCTComb
+   CIRCTCombTransforms
++  CIRCTCoreToFSM
+ )
+ 
+ add_circt_public_c_api_library(CIRCTCAPIDC
+diff --git a/lib/Conversion/CMakeLists.txt b/lib/Conversion/CMakeLists.txt
+index 7d109e1ea..5cde75517 100644
+--- a/lib/Conversion/CMakeLists.txt
++++ b/lib/Conversion/CMakeLists.txt
+@@ -38,6 +38,7 @@ add_subdirectory(SMTToZ3LLVM)
+ add_subdirectory(VerifToSV)
+ add_subdirectory(CalyxNative)
+ add_subdirectory(LTLToCore)
++add_subdirectory(CoreToFSM)
+ 
+ if(CIRCT_SLANG_FRONTEND_ENABLED)
+   add_subdirectory(ImportVerilog)
+diff --git a/tools/CMakeLists.txt b/tools/CMakeLists.txt
+index eab0ae910..088b92953 100644
+--- a/tools/CMakeLists.txt
++++ b/tools/CMakeLists.txt
+@@ -18,6 +18,7 @@ add_subdirectory(hlstool)
+ add_subdirectory(kanagawatool)
+ add_subdirectory(om-linker)
+ add_subdirectory(py-split-input-file)
++add_subdirectory(fsm-detect)
+ 
+ if(CIRCT_SLANG_FRONTEND_ENABLED)
+   add_subdirectory(circt-verilog)
+diff --git a/tools/circt-opt/CMakeLists.txt b/tools/circt-opt/CMakeLists.txt
+index f155bcf9f..ad5ae810f 100644
+--- a/tools/circt-opt/CMakeLists.txt
++++ b/tools/circt-opt/CMakeLists.txt
+@@ -29,6 +29,7 @@ target_link_libraries(circt-opt
+   CIRCTFSM
+   CIRCTFSMTransforms
+   CIRCTFSMToCore
++  CIRCTCoreToFSM
+   CIRCTFSMToSV
+   CIRCTHandshake
+   CIRCTHandshakeToDC
